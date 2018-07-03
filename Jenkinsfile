@@ -31,12 +31,12 @@ pipeline {
                         }
                         sh """
                         mvn -B clean
-                        mvn -B verify org.jacoco:jacoco-maven-plugin:prepare-agent                
+                        mvn -B deploy org.jacoco:jacoco-maven-plugin:prepare-agent                
                     """
                     } else {
                         sh """
                         mvn -B clean
-                        mvn -B deploy org.jacoco:jacoco-maven-plugin:prepare-agent                
+                        mvn -B verify  org.jacoco:jacoco-maven-plugin:prepare-agent                
                     """
 
                     }
