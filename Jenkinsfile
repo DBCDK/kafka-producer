@@ -27,7 +27,6 @@ pipeline {
                     if ( env.BRANCH_NAME ==~ /master/){
 
                         if ( version ==~ /.*SNAPSHOT/ ){
-                            currentBuild.rawBuild.result = Result.ABORTED
                             throw new hudson.AbortException('I will not build snapshot-versions on master-branch.')
                         }
                         // should do "deploy" but .. not working at the moment.
