@@ -20,31 +20,15 @@ pipeline {
         disableConcurrentBuilds()
     }
 
-
     stages {
-        stage("set environment"){
-            steps{
-                script {
-                    if (! env.BRANCH_NAME) {
-                        currentBuild.rawBuild.result = Result.ABORTED
-                        throw new hudson.AbortException('Job Started from non MultiBranch Build')
-                    } else {
-                        echo " Building BRANCH_NAME == ${BRANCH_NAME}"
-                    }
-                    version = readMavenPom().version
-                    if (!env.CHANGE_BRANCH) {
-                        branch = env.BRANCH_NAME
-                    } else {
-                        branch = env.CHANGE_BRANCH
-                    }
-                }
-            }
-        }
         stage("build") {
             steps {
                 script{
-                    if ( branch ==~ /master/){
-                        if (version ==~/SNAPSHOT/){
+                    echo " Building branch = ${BRANCH_NAME}"
+
+                    if ( env.BRANCH_NAME ==~ /master/){
+
+                        if (readMavenPom().version ==~ /SNAPSHOT/ ){
                             currentBuild.rawBuild.result = Result.ABORTED
                             throw new hudson.AbortException('I will not build snapshot-versions on master-branch.')
                         }
@@ -68,7 +52,7 @@ pipeline {
         stage("sonarqube") {
             steps {
                 script {
-                    if (branch ==~ /develop/) {
+                    if (env.BRANCH_NAME ==~ /develop/) {
                         echo " Uploading SonarQube results for branch ${BRANCH_NAME}"
 
                         sh """
@@ -82,7 +66,7 @@ pipeline {
 
                         """
                     } else {
-                        echo " No SonarQube. Branch ${BRANCH_NAME} is not master"
+                        echo " No SonarQube. Branch ${BRANCH_NAME} is not develop"
                     }
                 }
             }
