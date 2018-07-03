@@ -25,6 +25,15 @@
         <kafka-junit.version>1.0.0</kafka-junit.version>
     </properties>
 
+    <!-- For deployment -->
+    <distributionManagement>
+        <repository>
+            <id>mavenrepo.dbc.dk</id>
+            <name>DBC Maven Repository</name>
+            <url>http://mavenrepo.dbc.dk/content/repositories/snapshots</url>
+        </repository>
+    </distributionManagement>
+
     <dependencies>
 
         <!-- logging -->
