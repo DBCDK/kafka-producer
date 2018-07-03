@@ -13,7 +13,7 @@
 
     <groupId>dk.dbc.kafka</groupId>
     <artifactId>kafka-producer</artifactId>
-    <version>1.0.0</version>
+    <version>1.1.0</version>
 
     <name>Kafka Producer</name>
 
@@ -43,6 +43,7 @@
     <dependencies>
 
         <!-- logging -->
+
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
