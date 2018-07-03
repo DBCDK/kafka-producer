@@ -1,6 +1,3 @@
-def branch
-def version
-
 pipeline {
     agent {
         label "devel8"
@@ -24,11 +21,12 @@ pipeline {
         stage("build") {
             steps {
                 script{
-                    echo " Building branch = ${BRANCH_NAME}"
+                    def version = readMavenPom().version
+                    echo " Building branch = ${BRANCH_NAME} version ${version}"
 
                     if ( env.BRANCH_NAME ==~ /master/){
 
-                        if (readMavenPom().version ==~ /SNAPSHOT/ ){
+                        if ( version ==~ /.*SNAPSHOT/ ){
                             currentBuild.rawBuild.result = Result.ABORTED
                             throw new hudson.AbortException('I will not build snapshot-versions on master-branch.')
                         }

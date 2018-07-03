@@ -1,5 +1,6 @@
 package dk.dbc.kafka.producer;
 
+import dk.dbc.kafka.exception.KafkaException;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerRecord;
 
@@ -102,16 +103,15 @@ public class Producer implements AutoCloseable {
             props.put("key.serializer", "org.apache.kafka.common.serialization.StringSerializer");
             props.put("value.serializer", "org.apache.kafka.common.serialization.StringSerializer");
 
-            org.apache.kafka.clients.producer.Producer<String,String> producer = new KafkaProducer<>(props);
-            return producer;
+            return new KafkaProducer<>(props);
         }
 
         public Producer build(){
             if (this.servers==null){
-                throw new RuntimeException("A producer must have at least one broker (server) to connect to.");
+                throw new KafkaException("A producer must have at least one broker (server) to connect to.");
             }
             if (this.topic==null){
-                throw new RuntimeException("A producer must define a topic to send to.");
+                throw new KafkaException("A producer must define a topic to send to.");
             }
             Producer p = new Producer();
             p.bootstrapServers = this.servers;

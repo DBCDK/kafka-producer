@@ -24,9 +24,6 @@ public class TestSimpleConsumer {
     @ClassRule
     public static final SharedKafkaTestResource sharedKafkaTestResource = new SharedKafkaTestResource();
 
-    @Rule
-    public TestName name = new TestName();
-
     @Before
     public void init(){
         KafkaTestServer kafkaTestServer = sharedKafkaTestResource.getKafkaTestServer();

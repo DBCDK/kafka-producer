@@ -1,5 +1,6 @@
 package dk.dbc.kafka.consumer;
 
+import dk.dbc.kafka.exception.KafkaException;
 import org.apache.kafka.clients.consumer.ConsumerRebalanceListener;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
@@ -111,10 +112,10 @@ public class SimpleConsumer implements ConsumerRebalanceListener, AutoCloseable 
 
         public SimpleConsumer build(){
             if (topic==null){
-                throw new RuntimeException("A consumer is not allowed to have 0 topic");
+                throw new KafkaException("A consumer is not allowed to have 0 topic");
             }
             if (servers==null){
-                throw new RuntimeException("A consumer must have at least one broker (server) to connect to.");
+                throw new KafkaException("A consumer must have at least one broker (server) to connect to.");
             }
             SimpleConsumer c = new SimpleConsumer();
             c.bootstrapServers = this.servers;
