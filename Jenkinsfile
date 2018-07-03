@@ -52,7 +52,7 @@ pipeline {
         stage("sonarqube") {
             steps {
                 script {
-                    if (env.BRANCH_NAME ==~ /develop/) {
+                    if (env.BRANCH_NAME ==~ /develop/ ) {
                         echo " Uploading SonarQube results for branch ${BRANCH_NAME}"
 
                         sh """
