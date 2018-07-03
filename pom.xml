@@ -25,6 +25,7 @@
         <kafka-junit.version>1.0.0</kafka-junit.version>
     </properties>
 
+
     <!-- For deployment -->
     <distributionManagement>
         <repository>
