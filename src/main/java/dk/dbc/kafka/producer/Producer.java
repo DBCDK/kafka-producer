@@ -40,6 +40,8 @@ public class Producer implements AutoCloseable {
     public void send(String key, String value) {
         theProducer.send( pack(  key, value ));
     }
+
+    @Override
     public void close() {
         if (theProducer!=null) {
             theProducer.close();
@@ -68,7 +70,26 @@ public class Producer implements AutoCloseable {
             this.topic = s;
             return this;
         }
-
+        public Builder withacks(String acks){
+            this.acks = acks;
+            return this;
+        }
+        public Builder withretries(int retries){
+            this.retries = retries;
+            return this;
+        }
+        public Builder withbatchsize(int batchsize){
+            this.batchsize = batchsize;
+            return this;
+        }
+        public Builder withlinger(int linger){
+            this.linger = linger;
+            return this;
+        }
+        public Builder withbufferMemory(int bufferMemory){
+            this.bufferMemory = bufferMemory;
+            return this;
+        }
         private org.apache.kafka.clients.producer.Producer<String,String> createProducer(){
 
             Properties props = new Properties();

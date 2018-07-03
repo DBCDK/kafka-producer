@@ -23,37 +23,43 @@ pipeline {
 
     stages {
         stage("set environment"){
-            if (! env.BRANCH_NAME) {
-                currentBuild.rawBuild.result = Result.ABORTED
-                throw new hudson.AbortException('Job Started from non MultiBranch Build')
-            } else {
-                echo " Building BRANCH_NAME == ${BRANCH_NAME}"
-            }
-            version = readMavenPom().version
-            if (!env.CHANGE_BRANCH) {
-                branch = env.BRANCH_NAME
-            } else {
-                branch = env.CHANGE_BRANCH
+            steps{
+                script {
+                    if (! env.BRANCH_NAME) {
+                        currentBuild.rawBuild.result = Result.ABORTED
+                        throw new hudson.AbortException('Job Started from non MultiBranch Build')
+                    } else {
+                        echo " Building BRANCH_NAME == ${BRANCH_NAME}"
+                    }
+                    version = readMavenPom().version
+                    if (!env.CHANGE_BRANCH) {
+                        branch = env.BRANCH_NAME
+                    } else {
+                        branch = env.CHANGE_BRANCH
+                    }
+                }
             }
         }
         stage("build") {
             steps {
-
-                if ( branch ==~ /master/){
-                    if (version ==~/SNAPSHOT/){
-                        currentBuild.rawBuild.result = Result.ABORTED
-                        throw new hudson.AbortException('I will not build snapshot-versions on master-branch.')
-                    }
-                    sh """
+                script{
+                    if ( branch ==~ /master/){
+                        if (version ==~/SNAPSHOT/){
+                            currentBuild.rawBuild.result = Result.ABORTED
+                            throw new hudson.AbortException('I will not build snapshot-versions on master-branch.')
+                        }
+                        // should do "deploy" but .. not working at the moment.
+                        sh """
                         mvn -B clean
-                        mvn -B deploy org.jacoco:jacoco-maven-plugin:prepare-agent                
+                        mvn -B verify org.jacoco:jacoco-maven-plugin:prepare-agent                
                     """
-                } else {
-                    sh """
+                    } else {
+                        sh """
                         mvn -B clean
                         mvn -B verify org.jacoco:jacoco-maven-plugin:prepare-agent                
                     """
 
+                    }
                 }
 
             }
