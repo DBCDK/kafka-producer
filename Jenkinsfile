@@ -29,7 +29,6 @@ pipeline {
                         if ( version ==~ /.*SNAPSHOT/ ){
                             throw new hudson.AbortException('I will not build snapshot-versions on master-branch.')
                         }
-                        // should do "deploy" but .. not working at the moment.
                         sh """
                         mvn -B clean
                         mvn -B verify org.jacoco:jacoco-maven-plugin:prepare-agent                
@@ -37,7 +36,7 @@ pipeline {
                     } else {
                         sh """
                         mvn -B clean
-                        mvn -B verify org.jacoco:jacoco-maven-plugin:prepare-agent                
+                        mvn -B deploy org.jacoco:jacoco-maven-plugin:prepare-agent                
                     """
 
                     }

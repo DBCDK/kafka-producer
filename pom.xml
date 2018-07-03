@@ -31,8 +31,13 @@
         <repository>
             <id>mavenrepo.dbc.dk</id>
             <name>DBC Maven Repository</name>
-            <url>http://mavenrepo.dbc.dk/content/repositories/snapshots</url>
+            <url>http://mavenrepo.dbc.dk/content/repositories/releases</url>
         </repository>
+        <snapshotRepository>
+            <id>mavenrepo.dbc.dk</id>
+            <name>DBC Maven Repository</name>
+            <url>http://mavenrepo.dbc.dk/content/repositories/snapshots</url>
+        </snapshotRepository>
     </distributionManagement>
 
     <dependencies>
