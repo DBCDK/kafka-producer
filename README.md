@@ -27,10 +27,11 @@ A SimpleConsumer is available. It's only use is to check your setup (please don'
 ## Avalibility 
 Available on Nexus.
 
-'''
-<dependency>
-  <groupId>dk.dbc.kafka</groupId>
-  <artifactId>kafka-producer</artifactId>
-  <version>1.1.0</version>
-</dependency>
-'''
+
+    <dependency>
+        <groupId>dk.dbc.kafka</groupId>
+        <artifactId>kafka-producer</artifactId>
+        <version>1.1.0</version>
+    </dependency>
+
+Please check Nexus for latest version.
