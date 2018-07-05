@@ -19,6 +19,10 @@ Note that:
      <li>Trying to connect to an not-existing server, is an error and will throw a KafkaExecption (RuntimeException)</li>
      <li>Trying to send to a not-existing topic (in production) will result in a RuntimeException as well. Since Kafka is configured to only accept defined topics.</li>
  </ul>
+ 
+## Key / Value
+The key sent to Kafka is used by Kafka to partition data. Please use something with a reasonable distribution.
+Also Kafka guarantees order of delivery for 
 
 ## Utility
 
@@ -35,3 +39,7 @@ Available on Nexus.
     </dependency>
 
 Please check Nexus for latest version.
+
+## Futher information
+
+Please see http://kafka.apache.org 
