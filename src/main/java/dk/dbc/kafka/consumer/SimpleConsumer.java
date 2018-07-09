@@ -72,6 +72,14 @@ public class SimpleConsumer implements ConsumerRebalanceListener, AutoCloseable 
             return value;
         }
 
+        @Override
+        public String toString() {
+            return "Message{" +
+                    "topic='" + topic + '\'' +
+                    ", key='" + key + '\'' +
+                    ", value='" + value + '\'' +
+                    '}';
+        }
     }
     private SimpleConsumer() {
     }
