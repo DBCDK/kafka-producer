@@ -12,6 +12,7 @@ import org.junit.rules.TestName;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Collections;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
@@ -44,12 +45,16 @@ public class TestProducer  {
         producer.send("key2", "message2");
 
         SimpleConsumer consumer = SimpleConsumer.builder()
-            .withServers(brokers)
-            .withTopic(topicName)
-            .withGroupId(consumerGroupname)
-            .build();
+                .withServers(brokers)
+                .withTopic(topicName)
+                .withGroupId(consumerGroupname)
+                .build();
 
-        List<SimpleConsumer.Message> messages = consumer.poll();
+        List<SimpleConsumer.Message> messages = Collections.emptyList();
+
+        while(messages.isEmpty()) {
+            messages = consumer.poll();
+        }
 
         SimpleConsumer.Message message;
         message = messages.get(0);
