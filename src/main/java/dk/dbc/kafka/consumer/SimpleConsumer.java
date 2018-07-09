@@ -89,6 +89,7 @@ public class SimpleConsumer implements ConsumerRebalanceListener, AutoCloseable 
         private String servers=null;
         private String topic;
         private String groupId = "default";
+        private long timeout;
 
         public Builder withGroupId(String groupId){
             this.groupId = groupId;
@@ -101,6 +102,10 @@ public class SimpleConsumer implements ConsumerRebalanceListener, AutoCloseable 
 
         public Builder withTopic(String topic){
             this.topic=topic;
+            return this;
+        }
+        public Builder withTimeout(long timeout){
+            this.timeout = timeout;
             return this;
         }
 
@@ -129,9 +134,10 @@ public class SimpleConsumer implements ConsumerRebalanceListener, AutoCloseable 
             c.bootstrapServers = this.servers;
             c.topic = this.topic;
             c.theConsumer = createConsumer();
+            c.groupId = (this.groupId==null) ? this.topic+System.currentTimeMillis() : this.groupId;
+            c.timeout = this.timeout;
             log.info("Consumer-group {} subscribing to topic {}",c.groupId,c.topic);
             c.theConsumer.subscribe(Collections.singletonList(topic),c);
-            c.groupId = (this.groupId==null) ? this.topic+System.currentTimeMillis() : this.groupId;
             log.info("Performing initial poll");
             ConsumerRecords<String, String> records = c.theConsumer.poll(0);
             log.info("Initial poll returned {} records", records.count());

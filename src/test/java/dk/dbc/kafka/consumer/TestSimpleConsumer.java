@@ -28,8 +28,8 @@ public class TestSimpleConsumer {
     public void init(){
         KafkaTestServer kafkaTestServer = sharedKafkaTestResource.getKafkaTestServer();
         kafkaConnectString = kafkaTestServer.getKafkaConnectString();
-        group="group";
-        topic="topic";
+        group="my-group";
+        topic="my-topic";
     }
 
     @Test(expected = RuntimeException.class)
@@ -42,8 +42,9 @@ public class TestSimpleConsumer {
         SimpleConsumer.builder().withServers(kafkaConnectString).withGroupId(group).build();
     }
 
+    @Test
     public void createConsumerWithNoGroupIsNotAnError(){
-        SimpleConsumer.builder().withServers(kafkaConnectString).withTopic(topic).build();
+        SimpleConsumer.builder().withGroupId(group).withServers(kafkaConnectString).withTopic(topic).build();
     }
 
 }
