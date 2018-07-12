@@ -24,10 +24,10 @@ pipeline {
                     def version = readMavenPom().version
                     echo " Building branch = ${BRANCH_NAME} version ${version}"
 
-                    if ( env.BRANCH_NAME ==~ /master/){
+                    if ( env.BRANCH_NAME ==~ /release/){
 
                         if ( version ==~ /.*SNAPSHOT/ ){
-                            throw new hudson.AbortException('I will not build snapshot-versions on master-branch.')
+                            throw new hudson.AbortException('I will not build snapshot-versions on release-branch.')
                         }
                         sh """
                         mvn -B clean
@@ -48,7 +48,7 @@ pipeline {
         stage("sonarqube") {
             steps {
                 script {
-                    if (env.BRANCH_NAME ==~ /develop/ ) {
+                    if (env.BRANCH_NAME ==~ /master/ ) {
                         echo " Uploading SonarQube results for branch ${BRANCH_NAME}"
 
                         sh """
