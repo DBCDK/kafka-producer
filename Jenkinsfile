@@ -36,7 +36,7 @@ pipeline {
                     } else {
                         sh """
                         mvn -B clean
-                        mvn -B verify pmd:pmd org.jacoco:jacoco-maven-plugin:prepare-agent javadoc:aggregate                
+                        mvn -B org.jacoco:jacoco-maven-plugin:prepare-agent verify pmd:pmd javadoc:aggregate                
                     """
 
                     }
