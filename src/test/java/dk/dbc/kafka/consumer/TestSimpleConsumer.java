@@ -4,7 +4,6 @@ import com.salesforce.kafka.test.KafkaTestServer;
 import com.salesforce.kafka.test.junit.SharedKafkaTestResource;
 import dk.dbc.kafka.producer.TestProducer;
 import org.junit.*;
-import org.junit.rules.TestName;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -44,7 +43,19 @@ public class TestSimpleConsumer {
 
     @Test
     public void createConsumerWithNoGroupIsNotAnError(){
-        SimpleConsumer.builder().withGroupId(group).withServers(kafkaConnectString).withTopic(topic).build();
+        ;
+        try (SimpleConsumer consumer = SimpleConsumer.builder()
+                .withGroupId(group)
+                .withServers(kafkaConnectString)
+                .withTopic(topic)
+                .withTimeout(5000)
+                .build())
+        {
+            assertEquals(5000, consumer.getTimeout());
+            assertEquals( group, consumer.getGroupId());
+            assertEquals( kafkaConnectString, consumer.getBootstrapServers());
+            assertEquals( topic, consumer.getTopic());
+        };
     }
 
 }

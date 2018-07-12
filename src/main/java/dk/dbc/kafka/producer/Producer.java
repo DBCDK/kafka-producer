@@ -71,23 +71,23 @@ public class Producer implements AutoCloseable {
             this.topic = s;
             return this;
         }
-        public Builder withacks(String acks){
+        public Builder withAcks(String acks){
             this.acks = acks;
             return this;
         }
-        public Builder withretries(int retries){
+        public Builder withRetries(int retries){
             this.retries = retries;
             return this;
         }
-        public Builder withbatchsize(int batchsize){
+        public Builder withBatchsize(int batchsize){
             this.batchsize = batchsize;
             return this;
         }
-        public Builder withlinger(int linger){
+        public Builder withLinger(int linger){
             this.linger = linger;
             return this;
         }
-        public Builder withbufferMemory(int bufferMemory){
+        public Builder withBufferMemory(int bufferMemory){
             this.bufferMemory = bufferMemory;
             return this;
         }
